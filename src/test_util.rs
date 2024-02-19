@@ -2,8 +2,6 @@ use core::fmt::{
     Arguments as FmtArguments, Debug, Error as FmtError, Formatter, Result as FmtResult,
     Write as FmtWrite,
 };
-#[cfg(all(feature = "std", feature = "detect-color-support"))]
-use std::ffi::OsString;
 #[cfg(feature = "std")]
 use std::string::String;
 #[cfg(feature = "std")]
@@ -97,15 +95,6 @@ pub fn collect_string_from_recv(recv: &mpsc::Receiver<String>) -> String {
         data += &value;
     }
     data
-}
-
-#[cfg(all(feature = "std", feature = "detect-color-support"))]
-pub fn reset_env(name: &str, old_value: Option<OsString>) {
-    if let Some(value) = old_value {
-        std::env::set_var(name, value);
-    } else {
-        std::env::remove_var(name);
-    }
 }
 
 #[test]

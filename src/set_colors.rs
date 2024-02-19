@@ -144,8 +144,6 @@ mod tests {
     #[cfg(all(feature = "std", feature = "detect-color-support"))]
     use crate::enable_ansi_colors_if_supported;
     use crate::test_common::{SERIAL_TEST, TEST_ANSI_COLOR_SCHEME};
-    #[cfg(all(feature = "std", feature = "detect-color-support"))]
-    use crate::test_util::reset_env;
     use crate::test_util::FixedBufWriter;
     use crate::{
         are_ansi_colors_enabled, set_ansi_colors_enabled, unwind_context_with_fmt, StdPanicDetector,
@@ -245,12 +243,6 @@ mod tests {
 
         assert!(!are_ansi_colors_enabled());
 
-        let force_color_old = std::env::var_os("FORCE_COLOR");
-        let no_color_old = std::env::var_os("NO_COLOR");
-        let ignore_is_terminal_old = std::env::var_os("IGNORE_IS_TERMINAL");
-        let term_old = std::env::var_os("TERM");
-        let color_term_old = std::env::var_os("COLORTERM");
-
         std::env::remove_var("FORCE_COLOR");
         std::env::remove_var("NO_COLOR");
         std::env::set_var("IGNORE_IS_TERMINAL", "true");
@@ -273,12 +265,6 @@ mod tests {
         enable_ansi_colors_if_supported();
         assert!(are_ansi_colors_enabled());
         set_ansi_colors_enabled(false);
-
-        reset_env("FORCE_COLOR", force_color_old);
-        reset_env("NO_COLOR", no_color_old);
-        reset_env("IGNORE_IS_TERMINAL", ignore_is_terminal_old);
-        reset_env("TERM", term_old);
-        reset_env("COLORTERM", color_term_old);
 
         set_ansi_colors_enabled(false);
         assert!(!are_ansi_colors_enabled());
