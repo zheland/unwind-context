@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Feature-gated advanced color and style control functions like `enable_ansi_colors_if_supported` and `set_ansi_color_scheme`.
 - API documentation with examples.
 - Tests and doc-tests.
+- GitHub CI.
 
 [Unreleased]: https://github.com/zheland/custom-print/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/zheland/custom-print/compare/v0.0.0...v0.1.0
