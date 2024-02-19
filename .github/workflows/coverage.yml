@@ -1,7 +1,6 @@
 name: coverage
 
 on:
-  pull_request:
   push:
     branches:
       - master
@@ -19,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: rustup toolchain install beta --profile --component llvm-tools
+      - run: rustup toolchain install beta --profile minimal --component llvm-tools
       - run: cargo +beta llvm-cov --all-features --codecov --output-path codecov.json
       - uses: codecov/codecov-action@v4
         with:
