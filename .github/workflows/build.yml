@@ -60,12 +60,12 @@ jobs:
       - uses: actions/checkout@v4
       - run: rustup toolchain install ${{ matrix.rust-toolchain }} --profile minimal
       - run: rustup default ${{ matrix.rust-toolchain }}
-      - run: cargo test --all-targets ${{ matrix.cargo-flags }} --no-default-features -- -D warnings
-      - run: cargo test --all-targets ${{ matrix.cargo-flags }} -- -D warnings
-      - run: cargo test --all-targets ${{ matrix.cargo-flags }} --no-default-features --features "std" -- -D warnings
-      - run: cargo test --all-targets ${{ matrix.cargo-flags }} --no-default-features --features "detect-color-support" -- -D warnings
-      - run: cargo test --all-targets ${{ matrix.cargo-flags }} --no-default-features --features "custom-default-colors" -- -D warnings
-      - run: cargo test --all-targets ${{ matrix.cargo-flags }} --all-features -- -D warnings
+      - run: cargo test --all-targets ${{ matrix.cargo-flags }} --no-default-features
+      - run: cargo test --all-targets ${{ matrix.cargo-flags }}
+      - run: cargo test --all-targets ${{ matrix.cargo-flags }} --no-default-features --features "std"
+      - run: cargo test --all-targets ${{ matrix.cargo-flags }} --no-default-features --features "detect-color-support"
+      - run: cargo test --all-targets ${{ matrix.cargo-flags }} --no-default-features --features "custom-default-colors"
+      - run: cargo test --all-targets ${{ matrix.cargo-flags }} --all-features
 
   cargo-check-no-alloc:
     name: Check no-alloc compatibility
