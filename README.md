@@ -1,5 +1,14 @@
 # unwind-context
 
+[![Latest Version](https://img.shields.io/crates/v/unwind-context.svg)](https://crates.io/crates/unwind-context)
+[![Build Status](https://github.com/zheland/unwind-context/workflows/build/badge.svg)](https://github.com/zheland/unwind-context/actions)
+[![Documentation](https://docs.rs/unwind-context/badge.svg)](https://docs.rs/unwind-context)
+[![Codecov](https://codecov.io/gh/zheland/unwind-context/graph/badge.svg?token=DG62HL6K27)](https://codecov.io/gh/zheland/unwind-context)
+[![Dependencies status](https://deps.rs/repo/github/zheland/unwind-context/status.svg)](https://deps.rs/repo/github/zheland/unwind-context)
+[![Downloads](https://img.shields.io/crates/d/unwind-context)](https://crates.io/crates/unwind-context)
+[![License](https://img.shields.io/crates/l/unwind-context)](https://github.com/zheland/unwind-context/#license)
+[![MSRV 1.70+](https://img.shields.io/badge/rustc-1.70+-lightgray.svg)](https://blog.rust-lang.org/2023/06/01/Rust-1.70.0.html)
+
 The `unwind-context` crate makes debugging panics easier
 by adding a colored panic context with a simple macro.
 
