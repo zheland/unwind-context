@@ -1,0 +1,58 @@
+[package]
+name = "no-std-test"
+version = "0.1.0"
+authors = ["Andrey Zheleznov <zheland.net@gmail.com>"]
+edition = "2021"
+publish = false
+
+[dependencies.unwind-context]
+path = "../.."
+default-features = false
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+[workspace.lints.rust]
+meta_variable_misuse = "warn"
+missing_abi = "warn"
+missing_copy_implementations = "warn"
+missing_debug_implementations = "warn"
+missing_docs = "warn"
+non_ascii_idents = "warn"
+pointer_structural_match = "warn"
+rust_2018_idioms = "warn"
+single_use_lifetimes = "warn"
+trivial_casts = "warn"
+trivial_numeric_casts = "warn"
+unused_crate_dependencies = "warn"
+unused_extern_crates = "warn"
+unused_import_braces = "warn"
+unused_lifetimes = "warn"
+unused_qualifications = "warn"
+unused_results = "warn"
+variant_size_differences = "warn"
+
+[workspace.lints.clippy]
+all = "warn"
+pedantic = "warn"
+alloc_instead_of_core = "warn"
+allow_attributes_without_reason = "warn"
+arithmetic_side_effects = "warn"
+as_conversions = "warn"
+clone_on_ref_ptr = "warn"
+dbg_macro = "warn"
+empty_structs_with_brackets = "warn"
+error_impl_error = "warn"
+exit = "warn"
+get_unwrap = "warn"
+panic = "warn"
+print_stderr = "warn"
+std_instead_of_core = "warn"
+todo = "warn"
+try_err = "warn"
+unimplemented = "warn"
+unwrap_used = "warn"
+module_name_repetitions = "allow"

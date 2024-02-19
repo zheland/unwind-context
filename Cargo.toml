@@ -1,0 +1,94 @@
+[package]
+name = "unwind-context"
+version = "0.1.0"
+authors = ["Andrey Zheleznov <zheland.net@gmail.com>"]
+edition = "2021"
+rust-version = "1.70.0"
+description = "Macro to add colored panic context to your functions"
+documentation = "https://docs.rs/unwind-context"
+readme = "README.md"
+repository = "https://github.com/zheland/unwind-context"
+license = "MIT OR Apache-2.0"
+keywords = [
+    "panic",
+    "unwind",
+    "debug",
+    "no-std",
+    "color",
+]
+categories = [
+    "development-tools::debugging",
+    "rust-patterns",
+    "no-std",
+    "no-std::no-alloc",
+]
+
+[features]
+default = [ "std" ]
+std = []
+detect-color-support = [ "dep:supports-color" ]
+custom-default-colors = [ "dep:atomic_ref" ]
+
+[dependencies.supports-color]
+version = "3.0.0"
+optional = true
+
+[dependencies.atomic_ref]
+version = "0.2.1"
+optional = true
+
+[dev-dependencies]
+version-sync = "0.9.5"
+
+[[example]]
+name = "demo"
+required-features = [ "std", "detect-color-support" ]
+
+[badges.maintenance]
+status = "passively-maintained"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[workspace.lints.rust]
+meta_variable_misuse = "warn"
+missing_abi = "warn"
+missing_copy_implementations = "warn"
+missing_debug_implementations = "warn"
+missing_docs = "warn"
+non_ascii_idents = "warn"
+pointer_structural_match = "warn"
+rust_2018_idioms = "warn"
+single_use_lifetimes = "warn"
+trivial_casts = "warn"
+trivial_numeric_casts = "warn"
+unused_crate_dependencies = "warn"
+unused_extern_crates = "warn"
+unused_import_braces = "warn"
+unused_lifetimes = "warn"
+unused_qualifications = "warn"
+unused_results = "warn"
+variant_size_differences = "warn"
+
+[workspace.lints.clippy]
+all = "warn"
+pedantic = "warn"
+alloc_instead_of_core = "warn"
+allow_attributes_without_reason = "warn"
+arithmetic_side_effects = "warn"
+as_conversions = "warn"
+clone_on_ref_ptr = "warn"
+dbg_macro = "warn"
+empty_structs_with_brackets = "warn"
+error_impl_error = "warn"
+exit = "warn"
+get_unwrap = "warn"
+panic = "warn"
+print_stderr = "warn"
+std_instead_of_core = "warn"
+todo = "warn"
+try_err = "warn"
+unimplemented = "warn"
+unwrap_used = "warn"
+module_name_repetitions = "allow"

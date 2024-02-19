@@ -1,0 +1,13 @@
+<pre><code>$ cargo -q run --example demo --features="detect-color-support"
+thread &apos;main&apos; panicked at examples/basic.rs:34:12:
+byte index 1 is not a char boundary; it is inside &apos;á&apos; (bytes 0..2) of `áöù`
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+<span style="color: #c4a000">fn </span><span style="color: #fce94f">split</span>(value: <span style="color: #4e9a06">&quot;áöù&quot;</span>, at: <span style="color: #34e2e2">1</span>)
+    at <span style="color: #729fcf">examples/basic.rs:33:16</span>
+<span style="color: #c4a000">fn </span><span style="color: #fce94f">rotate_left</span>(value: <span style="color: #4e9a06">&quot;áöù&quot;</span>, mid: <span style="color: #34e2e2">1</span>)
+    at <span style="color: #729fcf">examples/basic.rs:27:16</span>
+<span style="color: #c4a000">fn </span><span style="color: #fce94f">collect_rotations</span>(value: <span style="color: #4e9a06">&quot;áöù&quot;</span>)
+    at <span style="color: #729fcf">examples/basic.rs:20:16</span>
+<span style="color: #c4a000">fn </span><span style="color: #fce94f">app_logic</span>(value.clone(): <span style="color: #c4a000">Wrapper</span>(<span style="color: #4e9a06">&quot;abc</span><span style="color: #ad7fa8">\n</span><span style="color: #4e9a06">bcd&quot;</span>), arr: [<span style="color: #34e2e2">1</span>, <span style="color: #34e2e2">2</span>], <span style="color: #34e2e2">...</span>, flag: <span style="color: #fce94f"><b>false</b></span>)
+    at <span style="color: #729fcf">examples/basic.rs:12:16</span>
+</code></pre>
