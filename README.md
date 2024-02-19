@@ -3,7 +3,7 @@
 The `unwind-context` crate makes debugging panics easier
 by adding a colored panic context with a simple macro.
 
-![Example](examples/demo.svg)
+[![Example](examples/demo.svg)](examples/demo.rs)
 
 ## Introduction
 
@@ -154,6 +154,7 @@ fn split(value: &str, at: usize) -> (&str, &str) {
 }
 ```
 will output:
+
 ![Example](examples/demo.svg)
 
 ## Macro expansion

@@ -128,6 +128,7 @@
 #![doc = include_str!("../examples/demo.rs")]
 #![doc = "```"]
 //! will output:
+#![doc = ""]
 #![doc = include_str!("../examples/demo.html")]
 //! # Macro expansion
 //!
