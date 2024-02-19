@@ -24,21 +24,21 @@ jobs:
           profile: minimal
           toolchain: stable
           default: true
-          components: rustfmt, clippy
+          components: clippy
 
       - name: Install Rust beta toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: beta
-          components: clippy
+          components: clippy, llvm-tools
 
       - name: Install Rust nightly toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: nightly
-          components: clippy
+          components: clippy, rustfmt
 
       - name: Install Rust 1.70.0 toolchain
         uses: actions-rs/toolchain@v1

@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
+set -Eeuo pipefail
+
 # Env variables:
 # - NO_EXIT_ON_FAIL:
 #   when set to `true`, all checks will be performed regardless of failure.
 
-set -Eeuo pipefail
+NO_EXIT_ON_FAIL="${NO_EXIT_ON_FAIL:-false}"
 
 comma_separated() {
     local IFS=","
