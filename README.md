@@ -1,7 +1,7 @@
 # unwind-context
 
-[![Latest Version](https://img.shields.io/crates/v/unwind-context.svg)](https://crates.io/crates/unwind-context)
 [![Build Status](https://github.com/zheland/unwind-context/workflows/build/badge.svg)](https://github.com/zheland/unwind-context/actions)
+[![Latest Version](https://img.shields.io/crates/v/unwind-context.svg)](https://crates.io/crates/unwind-context)
 [![Documentation](https://docs.rs/unwind-context/badge.svg)](https://docs.rs/unwind-context)
 [![Codecov](https://codecov.io/gh/zheland/unwind-context/graph/badge.svg)](https://codecov.io/gh/zheland/unwind-context)
 [![Dependencies status](https://deps.rs/repo/github/zheland/unwind-context/status.svg)](https://deps.rs/repo/github/zheland/unwind-context)
