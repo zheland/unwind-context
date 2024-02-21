@@ -11,7 +11,6 @@ pub trait DebugAnsiColored {
     /// # Errors
     ///
     /// This function will return an error if the value formatting fails.
-
     fn fmt_colored(
         &self,
         f: &mut Formatter<'_>,

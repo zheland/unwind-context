@@ -95,7 +95,8 @@ impl<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> UnwindContextWithI
 /// [`StdPanicDetector`] as a default panic detector and
 /// [`get_ansi_color_scheme_if_colors_enabled`] as a default color scheme. When
 /// using default values for all optional parameters, consider the use of
-/// [`unwind_context`] macro instead.
+/// [`unwind_context`] macro instead. See
+/// [equivalent macros](#equivalent-macros) section below.
 ///
 /// The returned unwind context scope guard value should be kept alive as long
 /// as unwind context is needed. If unused, the [`UnwindContextWithIo`] will
@@ -149,6 +150,22 @@ impl<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> UnwindContextWithI
 /// }
 /// ```
 ///
+/// # Equivalent macros
+/// ```rust
+/// use unwind_context::{unwind_context, unwind_context_with_io};
+///
+/// fn func(foo: u32, bar: &str) {
+///     unwind_context!(fn(foo, bar));
+///     unwind_context_with_io!((fn(foo, bar)));
+///     unwind_context_with_io!(
+///         (fn(foo, bar)),
+///         writer = ::std::io::stderr(),
+///         panic_detector = unwind_context::StdPanicDetector,
+///         color_scheme = unwind_context::get_ansi_color_scheme_if_colors_enabled(),
+///     );
+/// }
+/// ```
+///
 /// [`unwind_context`]: crate::unwind_context
 /// [`StdPanicDetector`]: crate::StdPanicDetector
 /// [`get_ansi_color_scheme_if_colors_enabled`]: crate::get_ansi_color_scheme_if_colors_enabled
@@ -188,7 +205,8 @@ macro_rules! unwind_context_with_io {
 /// [`StdPanicDetector`] as a default panic detector and
 /// [`get_ansi_color_scheme_if_colors_enabled`] as a default color scheme. When
 /// using default values for all optional parameters, consider the use of
-/// [`debug_unwind_context`] macro instead.
+/// [`debug_unwind_context`] macro instead. See
+/// [equivalent macros](#equivalent-macros) section below.
 ///
 /// The returned unwind context scope guard value should be kept alive as long
 /// as unwind context is needed. If unused, the [`UnwindContextWithIo`] will
@@ -244,6 +262,22 @@ macro_rules! unwind_context_with_io {
 ///         color_scheme = Some(custom_color_scheme),
 ///     );
 ///     // ...
+/// }
+/// ```
+///
+/// # Equivalent macros
+/// ```rust
+/// use unwind_context::{debug_unwind_context, debug_unwind_context_with_io};
+///
+/// fn func(foo: u32, bar: &str) {
+///     debug_unwind_context!(fn(foo, bar));
+///     debug_unwind_context_with_io!((fn(foo, bar)));
+///     debug_unwind_context_with_io!(
+///         (fn(foo, bar)),
+///         writer = ::std::io::stderr(),
+///         panic_detector = unwind_context::StdPanicDetector,
+///         color_scheme = unwind_context::get_ansi_color_scheme_if_colors_enabled(),
+///     );
 /// }
 /// ```
 ///

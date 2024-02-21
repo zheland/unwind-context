@@ -2,8 +2,9 @@
 /// scheme , and given function or scope context.
 ///
 /// It uses [`std::io::stderr`] writer, [`StdPanicDetector`] panic detector, and
-/// a color scheme determined by the
-/// [`get_ansi_color_scheme_if_colors_enabled`] function.
+/// a color scheme determined by the [`get_ansi_color_scheme_if_colors_enabled`]
+/// function. If you want to customize a writer, a panic detector, or a color
+/// scheme, use [`unwind_context_with_io`] or [`unwind_context_with_fmt`].
 ///
 /// The returned unwind context scope guard value should be kept alive as long
 /// as unwind context is needed. If unused, the [`UnwindContextWithIo`] will
@@ -82,6 +83,8 @@
 /// }
 /// ```
 ///
+/// [`unwind_context_with_io`]: crate::unwind_context_with_io
+/// [`unwind_context_with_fmt`]: crate::unwind_context_with_fmt
 /// [`UnwindContextWithIo`]: crate::UnwindContextWithIo
 /// [`StdPanicDetector`]: crate::StdPanicDetector
 /// [`get_ansi_color_scheme_if_colors_enabled`]: crate::get_ansi_color_scheme_if_colors_enabled
@@ -108,8 +111,9 @@ macro_rules! unwind_context {
 /// scheme , and given function or scope context in debug builds only.
 ///
 /// It uses [`std::io::stderr`] writer, [`StdPanicDetector`] panic detector, and
-/// a color scheme determined by the[`get_ansi_color_scheme_if_colors_enabled`]
-/// function.
+/// a color scheme determined by the [`get_ansi_color_scheme_if_colors_enabled`]
+/// function. If you want to customize a writer, a panic detector, or a color
+/// scheme, use [`unwind_context_with_io`] or [`unwind_context_with_fmt`].
 ///
 /// The returned unwind context scope guard value should be kept alive as long
 /// as unwind context is needed. If unused, the [`UnwindContextWithIo`] will
@@ -195,6 +199,8 @@ macro_rules! unwind_context {
 /// }
 /// ```
 ///
+/// [`unwind_context_with_io`]: crate::unwind_context_with_io
+/// [`unwind_context_with_fmt`]: crate::unwind_context_with_fmt
 /// [`UnwindContextWithIo`]: crate::UnwindContextWithIo
 /// [`StdPanicDetector`]: crate::StdPanicDetector
 /// [`get_ansi_color_scheme_if_colors_enabled`]: crate::get_ansi_color_scheme_if_colors_enabled
