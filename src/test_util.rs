@@ -116,3 +116,21 @@ fn test_pattern_matcher() {
     assert_eq!(value_ref.read_until("a"), Ok(" b"));
     assert_eq!(value_ref.read_until("z"), Ok(""));
 }
+
+#[test]
+fn test_no_panic_on_buffer_overflow() {
+    let mut buffer = [0; 10];
+    let mut writer = FixedBufWriter::new(&mut buffer);
+    assert_eq!(writer.write_str("0123456789"), Ok(()));
+
+    let mut buffer = [0; 9];
+    let mut writer = FixedBufWriter::new(&mut buffer);
+    assert_eq!(writer.write_str("0123456789"), Err(FmtError));
+
+    let mut writer = FixedBufWriter::new(&mut []);
+
+    // Emulate an inconsistent state with a very high value of buffer used.
+    writer.used = usize::MAX - 9;
+
+    assert_eq!(writer.write_str("0123456789"), Err(FmtError));
+}
