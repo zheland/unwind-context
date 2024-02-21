@@ -1,22 +1,28 @@
 #![no_std]
 #![no_main]
+#![allow(
+    missing_docs,
+    clippy::panic,
+    clippy::missing_panics_doc,
+    clippy::unimplemented
+)]
 
 extern crate alloc;
 
 use alloc::string::String;
 use core::alloc::{GlobalAlloc, Layout};
 use core::panic::PanicInfo;
-use core::ptr::null_mut;
 
 use unwind_context::unwind_context_with_fmt;
 
 #[global_allocator]
 static GLOBAL_ALLOCATOR: DummyAllocator = DummyAllocator;
 
+#[derive(Copy, Clone, Debug)]
 struct DummyAllocator;
 
 #[panic_handler]
-fn panic(_: &PanicInfo) -> ! {
+fn panic(_: &PanicInfo<'_>) -> ! {
     loop {}
 }
 
@@ -38,7 +44,7 @@ pub extern "C" fn func(a: u32, b: *const u8, c: bool) {
     panic!();
 }
 
-#[derive(Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct CustomPanicDetector;
 
 impl unwind_context::PanicDetector for CustomPanicDetector {
@@ -49,7 +55,10 @@ impl unwind_context::PanicDetector for CustomPanicDetector {
 
 unsafe impl GlobalAlloc for DummyAllocator {
     unsafe fn alloc(&self, _layout: Layout) -> *mut u8 {
-        null_mut()
+        unimplemented!()
     }
-    unsafe fn dealloc(&self, _ptr: *mut u8, _layout: Layout) {}
+
+    unsafe fn dealloc(&self, _ptr: *mut u8, _layout: Layout) {
+        unimplemented!()
+    }
 }

@@ -1,5 +1,11 @@
 #![no_std]
 #![no_main]
+#![allow(
+    missing_docs,
+    clippy::panic,
+    clippy::missing_panics_doc,
+    clippy::unimplemented
+)]
 
 use core::fmt::{Result as FmtResult, Write as FmtWrite};
 use core::panic::PanicInfo;
@@ -7,7 +13,7 @@ use core::panic::PanicInfo;
 use unwind_context::unwind_context_with_fmt;
 
 #[panic_handler]
-fn panic(_: &PanicInfo) -> ! {
+fn panic(_: &PanicInfo<'_>) -> ! {
     loop {}
 }
 
@@ -28,7 +34,7 @@ pub extern "C" fn func(a: u32, b: *const u8, c: bool) {
     panic!();
 }
 
-#[derive(Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct Writer;
 
 impl FmtWrite for Writer {
@@ -37,7 +43,7 @@ impl FmtWrite for Writer {
     }
 }
 
-#[derive(Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct CustomPanicDetector;
 
 impl unwind_context::PanicDetector for CustomPanicDetector {
