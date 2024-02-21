@@ -6,7 +6,7 @@ use unwind_context::unwind_context;
 struct Wrapper<T>(T);
 
 fn main() {
-    unwind_context::enable_ansi_colors_if_supported();
+    unwind_context::enable_colors_if_supported();
     app_logic(Wrapper("abc\nbcd".to_owned()), &[1, 2], "secret", false);
 }
 

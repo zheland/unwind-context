@@ -1,21 +1,36 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 ### Changed
+- Function `set_ansi_colors_enabled` is renamed to `set_colors_enabled`.
+- Function `are_ansi_colors_enabled` is renamed to `are_colors_enabled`.
+- Function `enable_ansi_colors_if_supported` is renamed to
+  `enable_colors_if_supported`.
+- Function `set_ansi_color_scheme` is renamed to `set_default_color_scheme`.
+- Function `get_ansi_color_scheme` is renamed to `get_default_color_scheme`.
+- Function `get_ansi_color_scheme_if_colors_enabled` is renamed to
+  `get_default_color_scheme_if_enabled`.
+- Const `ANSI_COLOR_SCHEME` is renamed to `DEFAULT_COLOR_SCHEME`.
+- Const `DEFAULT_ANSI_COLOR_SCHEME` is renamed to `DEFAULT_DEFAULT_COLOR_SCHEME`.
 - Improve `debug_unwind`-like macros docs.
 - Improve `DebugAnsiColored::fmt_colored` docs.
 - Add some missing function attributes.
 
 ## [0.1.0] - 2024-02-19
 ### Added
-- Context definition macros `{debug_|}unwind_context{_with_fmt|_with_io}` and other auxiliary macros
-- Unwind context scope guard structures `UnwindContextWithFmt` and `UnwindContextWithIo` and other auxiliary structures and traits.
-- Basic color and style control functions like `set_ansi_colors_enabled`, `are_ansi_colors_enabled` and `get_ansi_color_scheme`.
-- Feature-gated advanced color and style control functions like `enable_ansi_colors_if_supported` and `set_ansi_color_scheme`.
+- Context definition macros `{debug_|}unwind_context{_with_fmt|_with_io}`
+  and other auxiliary macros
+- Unwind context scope guard structures `UnwindContextWithFmt` and
+  `UnwindContextWithIo` and other auxiliary structures and traits.
+- Basic color and style control functions like `set_colors_enabled`,
+  `are_colors_enabled` and `get_default_color_scheme`.
+- Feature-gated advanced color and style control functions like
+  `enable_colors_if_supported` and `set_default_color_scheme`.
 - API documentation with examples.
 - Tests and doc-tests.
 - GitHub CI.

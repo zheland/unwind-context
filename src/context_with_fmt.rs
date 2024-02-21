@@ -92,7 +92,7 @@ impl<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> UnwindContextWithF
 /// Creates [`UnwindContextWithFmt`] with a given [`core::fmt::Write`] writer,
 /// panic detector, color scheme, and a given function or scope context.
 ///
-/// If not specified it uses [`get_ansi_color_scheme_if_colors_enabled`] as a
+/// If not specified it uses [`get_default_color_scheme_if_enabled`] as a
 /// default color scheme.
 ///
 /// The returned unwind context scope guard value should be kept alive as long
@@ -144,7 +144,7 @@ impl<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> UnwindContextWithF
 /// ```
 ///
 /// [`build_unwind_context_data`]: crate::build_unwind_context_data
-/// [`get_ansi_color_scheme_if_colors_enabled`]: crate::get_ansi_color_scheme_if_colors_enabled
+/// [`get_default_color_scheme_if_enabled`]: crate::get_default_color_scheme_if_enabled
 #[macro_export]
 macro_rules! unwind_context_with_fmt {
     (
@@ -160,7 +160,7 @@ macro_rules! unwind_context_with_fmt {
             $panic_detector,
             $crate::expr_or_default_expr!(
                 $( $color_scheme )?,
-                $crate::get_ansi_color_scheme_if_colors_enabled()
+                $crate::get_default_color_scheme_if_enabled()
             ),
         )
     };
@@ -170,7 +170,7 @@ macro_rules! unwind_context_with_fmt {
 /// panic detector, color scheme, and a given function or scope context in debug
 /// builds only.
 ///
-/// If not specified it uses [`get_ansi_color_scheme_if_colors_enabled`] as a
+/// If not specified it uses [`get_default_color_scheme_if_enabled`] as a
 /// default color scheme.
 ///
 /// The returned unwind context scope guard value should be kept alive as long
@@ -227,7 +227,7 @@ macro_rules! unwind_context_with_fmt {
 /// ```
 ///
 /// [`build_unwind_context_data`]: crate::build_unwind_context_data
-/// [`get_ansi_color_scheme_if_colors_enabled`]: crate::get_ansi_color_scheme_if_colors_enabled
+/// [`get_default_color_scheme_if_enabled`]: crate::get_default_color_scheme_if_enabled
 #[macro_export]
 macro_rules! debug_unwind_context_with_fmt {
     ( $( $tokens:tt )* ) => { $crate::debug_unwind_context_with_fmt_impl!( $($tokens)* ) };

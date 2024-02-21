@@ -3,29 +3,29 @@ use core::sync::atomic::{AtomicBool, Ordering as AtomicOrdering};
 #[cfg(feature = "custom-default-colors")]
 use atomic_ref::AtomicRef;
 
-use crate::{AnsiColorScheme, DEFAULT_ANSI_COLOR_SCHEME};
+use crate::{AnsiColorScheme, DEFAULT_DEFAULT_COLOR_SCHEME};
 
 static SHOULD_COLORIZE: AtomicBool = AtomicBool::new(false);
 
 #[cfg(feature = "custom-default-colors")]
 #[cfg_attr(docsrs, doc(cfg(feature = "custom-default-colors")))]
-static ANSI_COLOR_SCHEME: AtomicRef<'_, AnsiColorScheme> = AtomicRef::new(None);
+static DEFAULT_COLOR_SCHEME: AtomicRef<'_, AnsiColorScheme> = AtomicRef::new(None);
 
 /// Enables or disables ANSI colorization.
 ///
 /// Note that this function does not check whether the terminal supports
 /// 16-ANSI-color mode or not and doesn't check `NO_COLOR` or `FORCE_COLOR`
-/// environment variables. Please use `enable_ansi_colors_if_supported` if you
-/// need to enable colorization only if supported by the terminal.
+/// environment variables. Please use `enable_colors_if_supported` if you need
+/// to enable colorization only if supported by the terminal.
 ///
 /// # Examples
 ///
 /// ```rust
-/// unwind_context::set_ansi_colors_enabled(true);
-/// assert!(unwind_context::are_ansi_colors_enabled());
+/// unwind_context::set_colors_enabled(true);
+/// assert!(unwind_context::are_colors_enabled());
 /// ```
 #[inline]
-pub fn set_ansi_colors_enabled(enabled: bool) {
+pub fn set_colors_enabled(enabled: bool) {
     SHOULD_COLORIZE.store(enabled, AtomicOrdering::Relaxed);
 }
 
@@ -36,11 +36,11 @@ pub fn set_ansi_colors_enabled(enabled: bool) {
 /// # Examples
 ///
 /// ```rust
-/// unwind_context::set_ansi_colors_enabled(true);
-/// assert!(unwind_context::are_ansi_colors_enabled());
+/// unwind_context::set_colors_enabled(true);
+/// assert!(unwind_context::are_colors_enabled());
 /// ```
 #[inline]
-pub fn are_ansi_colors_enabled() -> bool {
+pub fn are_colors_enabled() -> bool {
     SHOULD_COLORIZE.load(AtomicOrdering::Relaxed)
 }
 
@@ -62,13 +62,13 @@ pub fn are_ansi_colors_enabled() -> bool {
 /// # Examples
 ///
 /// ```rust
-/// unwind_context::enable_ansi_colors_if_supported();
+/// unwind_context::enable_colors_if_supported();
 /// ```
 #[inline]
-pub fn enable_ansi_colors_if_supported() {
+pub fn enable_colors_if_supported() {
     use supports_color::Stream;
     if supports_color::on(Stream::Stderr).is_some() {
-        set_ansi_colors_enabled(true);
+        set_colors_enabled(true);
     }
 }
 
@@ -79,7 +79,7 @@ pub fn enable_ansi_colors_if_supported() {
 /// # Examples
 ///
 /// ```rust
-/// unwind_context::set_ansi_color_scheme(&unwind_context::AnsiColorScheme {
+/// unwind_context::set_default_color_scheme(&unwind_context::AnsiColorScheme {
 ///     default: "\u{1b}[0m",
 ///     location: "\u{1b}[31m",
 ///     fn_keyword: "\u{1b}[32m",
@@ -95,35 +95,35 @@ pub fn enable_ansi_colors_if_supported() {
 /// });
 /// ```
 #[inline]
-pub fn set_ansi_color_scheme(color_scheme: &'static AnsiColorScheme) {
-    ANSI_COLOR_SCHEME.store(Some(color_scheme), AtomicOrdering::Release);
+pub fn set_default_color_scheme(color_scheme: &'static AnsiColorScheme) {
+    DEFAULT_COLOR_SCHEME.store(Some(color_scheme), AtomicOrdering::Release);
 }
 
-/// Returns current ANSI color scheme.
+/// Returns the currently set default ANSI color scheme.
 ///
 /// # Examples
 ///
 /// ```rust
-/// let _current_global_color_scheme = unwind_context::get_ansi_color_scheme();
+/// let _current_global_color_scheme = unwind_context::get_default_color_scheme();
 /// ```
 #[inline]
 #[must_use]
-pub fn get_ansi_color_scheme() -> &'static AnsiColorScheme {
-    get_ansi_color_scheme_impl()
+pub fn get_default_color_scheme() -> &'static AnsiColorScheme {
+    get_default_ansi_color_scheme_impl()
 }
 
 #[cfg(feature = "custom-default-colors")]
 #[inline]
-fn get_ansi_color_scheme_impl() -> &'static AnsiColorScheme {
-    ANSI_COLOR_SCHEME
+fn get_default_ansi_color_scheme_impl() -> &'static AnsiColorScheme {
+    DEFAULT_COLOR_SCHEME
         .load(AtomicOrdering::Acquire)
-        .unwrap_or(&DEFAULT_ANSI_COLOR_SCHEME)
+        .unwrap_or(&DEFAULT_DEFAULT_COLOR_SCHEME)
 }
 
 #[cfg(not(feature = "custom-default-colors"))]
 #[inline]
-fn get_ansi_color_scheme_impl() -> &'static AnsiColorScheme {
-    &DEFAULT_ANSI_COLOR_SCHEME
+fn get_default_ansi_color_scheme_impl() -> &'static AnsiColorScheme {
+    &DEFAULT_DEFAULT_COLOR_SCHEME
 }
 
 /// Returns current ANSI color scheme if ANSI colors were enabled, `None`
@@ -133,24 +133,24 @@ fn get_ansi_color_scheme_impl() -> &'static AnsiColorScheme {
 ///
 /// ```rust
 /// let _current_global_color_scheme: Option<_> =
-///     unwind_context::get_ansi_color_scheme_if_colors_enabled();
+///     unwind_context::get_default_color_scheme_if_enabled();
 /// ```
 #[inline]
-pub fn get_ansi_color_scheme_if_colors_enabled() -> Option<&'static AnsiColorScheme> {
-    are_ansi_colors_enabled().then(get_ansi_color_scheme)
+pub fn get_default_color_scheme_if_enabled() -> Option<&'static AnsiColorScheme> {
+    are_colors_enabled().then(get_default_color_scheme)
 }
 
 #[cfg(all(test, feature = "std"))]
 mod tests {
     #[cfg(all(feature = "std", feature = "detect-color-support"))]
-    use crate::enable_ansi_colors_if_supported;
+    use crate::enable_colors_if_supported;
     use crate::test_common::{SERIAL_TEST, TEST_ANSI_COLOR_SCHEME};
     use crate::test_util::FixedBufWriter;
     use crate::{
-        are_ansi_colors_enabled, set_ansi_colors_enabled, unwind_context_with_fmt, StdPanicDetector,
+        are_colors_enabled, set_colors_enabled, unwind_context_with_fmt, StdPanicDetector,
     };
     #[cfg(feature = "custom-default-colors")]
-    use crate::{set_ansi_color_scheme, DEFAULT_ANSI_COLOR_SCHEME};
+    use crate::{set_default_color_scheme, DEFAULT_DEFAULT_COLOR_SCHEME};
 
     #[test]
     fn test_set_ansi_colors_enabled() {
@@ -160,7 +160,7 @@ mod tests {
         let foo = 123;
         let bar = "BAR";
 
-        assert!(!are_ansi_colors_enabled());
+        assert!(!are_colors_enabled());
 
         // Colors are disabled by default.
         let mut writer = FixedBufWriter::new(&mut buffer);
@@ -189,8 +189,8 @@ mod tests {
             .into_str()
             .starts_with("foo: {NUM}123{DEF}, bar: {QUOT}\"BAR\"{DEF}\n    at {LOC}"));
 
-        set_ansi_colors_enabled(true);
-        assert!(are_ansi_colors_enabled());
+        set_colors_enabled(true);
+        assert!(are_colors_enabled());
 
         // The default color scheme is used if colors are enabled globally.
         let mut writer = FixedBufWriter::new(&mut buffer);
@@ -207,7 +207,7 @@ mod tests {
 
         // The local color scheme overrides the global one is used if specified.
         let mut writer = FixedBufWriter::new(&mut buffer);
-        assert!(are_ansi_colors_enabled());
+        assert!(are_colors_enabled());
         let mut ctx = unwind_context_with_fmt!(
             (foo, bar),
             writer = &mut writer,
@@ -220,8 +220,8 @@ mod tests {
             .into_str()
             .starts_with("foo: {NUM}123{DEF}, bar: {QUOT}\"BAR\"{DEF}\n    at {LOC}"));
 
-        set_ansi_colors_enabled(false);
-        assert!(!are_ansi_colors_enabled());
+        set_colors_enabled(false);
+        assert!(!are_colors_enabled());
 
         // When colors are disabled, it no longer uses any color scheme.
         let mut writer = FixedBufWriter::new(&mut buffer);
@@ -242,46 +242,46 @@ mod tests {
     fn test_enable_ansi_colors_if_supported() {
         let _guard = SERIAL_TEST.lock().unwrap();
 
-        assert!(!are_ansi_colors_enabled());
+        assert!(!are_colors_enabled());
 
         std::env::remove_var("FORCE_COLOR");
         std::env::remove_var("NO_COLOR");
         std::env::set_var("IGNORE_IS_TERMINAL", "true");
         std::env::set_var("TERM", "dumb");
-        enable_ansi_colors_if_supported();
-        assert!(!are_ansi_colors_enabled());
+        enable_colors_if_supported();
+        assert!(!are_colors_enabled());
 
         std::env::set_var("TERM", "xterm-256color");
         std::env::set_var("COLORTERM", "truecolor");
-        enable_ansi_colors_if_supported();
-        assert!(are_ansi_colors_enabled());
-        set_ansi_colors_enabled(false);
+        enable_colors_if_supported();
+        assert!(are_colors_enabled());
+        set_colors_enabled(false);
 
         std::env::set_var("NO_COLOR", "true");
-        enable_ansi_colors_if_supported();
-        assert!(!are_ansi_colors_enabled());
+        enable_colors_if_supported();
+        assert!(!are_colors_enabled());
 
         std::env::remove_var("NO_COLOR");
         std::env::set_var("FORCE_COLOR", "true");
-        enable_ansi_colors_if_supported();
-        assert!(are_ansi_colors_enabled());
-        set_ansi_colors_enabled(false);
+        enable_colors_if_supported();
+        assert!(are_colors_enabled());
+        set_colors_enabled(false);
 
-        set_ansi_colors_enabled(false);
-        assert!(!are_ansi_colors_enabled());
+        set_colors_enabled(false);
+        assert!(!are_colors_enabled());
     }
 
     #[cfg(feature = "custom-default-colors")]
     #[test]
-    fn test_set_ansi_color_scheme() {
+    fn test_set_default_ansi_color_scheme() {
         let _guard = SERIAL_TEST.lock().unwrap();
 
         let mut buffer = [0; 128];
         let foo = 123;
         let bar = "BAR";
 
-        set_ansi_colors_enabled(true);
-        assert!(are_ansi_colors_enabled());
+        set_colors_enabled(true);
+        assert!(are_colors_enabled());
 
         // The default color scheme is used if colors are enabled globally.
         let mut writer = FixedBufWriter::new(&mut buffer);
@@ -298,11 +298,11 @@ mod tests {
             "\u{1b}[0m\n    at \u{1b}[94m"
         )));
 
-        set_ansi_color_scheme(&TEST_ANSI_COLOR_SCHEME);
+        set_default_color_scheme(&TEST_ANSI_COLOR_SCHEME);
 
         // The default color scheme can be changed.
         let mut writer = FixedBufWriter::new(&mut buffer);
-        assert!(are_ansi_colors_enabled());
+        assert!(are_colors_enabled());
         let mut ctx = unwind_context_with_fmt!(
             (foo, bar),
             writer = &mut writer,
@@ -314,11 +314,11 @@ mod tests {
             .into_str()
             .starts_with("foo: {NUM}123{DEF}, bar: {QUOT}\"BAR\"{DEF}\n    at {LOC}"));
 
-        set_ansi_color_scheme(&DEFAULT_ANSI_COLOR_SCHEME);
+        set_default_color_scheme(&DEFAULT_DEFAULT_COLOR_SCHEME);
 
         // The default color scheme can be changed.
         let mut writer = FixedBufWriter::new(&mut buffer);
-        assert!(are_ansi_colors_enabled());
+        assert!(are_colors_enabled());
         let mut ctx = unwind_context_with_fmt!(
             (foo, bar),
             writer = &mut writer,
@@ -332,7 +332,7 @@ mod tests {
             "\u{1b}[0m\n    at \u{1b}[94m"
         )));
 
-        set_ansi_colors_enabled(false);
-        assert!(!are_ansi_colors_enabled());
+        set_colors_enabled(false);
+        assert!(!are_colors_enabled());
     }
 }

@@ -1,6 +1,6 @@
 /// The default ANSI color scheme, which is used if colorization is enabled but
 /// no custom color scheme is set.
-pub static DEFAULT_ANSI_COLOR_SCHEME: AnsiColorScheme = AnsiColorScheme {
+pub static DEFAULT_DEFAULT_COLOR_SCHEME: AnsiColorScheme = AnsiColorScheme {
     default: "\u{1b}[0m",
     location: "\u{1b}[94m",
     fn_keyword: "\u{1b}[33m",

@@ -93,9 +93,9 @@ impl<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> UnwindContextWithI
 ///
 /// If not specified it uses [`std::io::stderr`] as a default writer,
 /// [`StdPanicDetector`] as a default panic detector and
-/// [`get_ansi_color_scheme_if_colors_enabled`] as a default color scheme. When
-/// using default values for all optional parameters, consider the use of
-/// [`unwind_context`] macro instead. See
+/// [`get_default_color_scheme_if_enabled`] as a default color scheme. When
+/// using default values for all optional parameters, consider the
+/// use of [`unwind_context`] macro instead. See
 /// [equivalent macros](#equivalent-macros) section below.
 ///
 /// The returned unwind context scope guard value should be kept alive as long
@@ -161,14 +161,14 @@ impl<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> UnwindContextWithI
 ///         (fn(foo, bar)),
 ///         writer = ::std::io::stderr(),
 ///         panic_detector = unwind_context::StdPanicDetector,
-///         color_scheme = unwind_context::get_ansi_color_scheme_if_colors_enabled(),
+///         color_scheme = unwind_context::get_default_color_scheme_if_enabled(),
 ///     );
 /// }
 /// ```
 ///
 /// [`unwind_context`]: crate::unwind_context
 /// [`StdPanicDetector`]: crate::StdPanicDetector
-/// [`get_ansi_color_scheme_if_colors_enabled`]: crate::get_ansi_color_scheme_if_colors_enabled
+/// [`get_default_color_scheme_if_enabled`]: crate::get_default_color_scheme_if_enabled
 /// [`build_unwind_context_data`]: crate::build_unwind_context_data
 #[macro_export]
 macro_rules! unwind_context_with_io {
@@ -191,7 +191,7 @@ macro_rules! unwind_context_with_io {
             ),
             $crate::expr_or_default_expr!(
                 $( $color_scheme )?,
-                $crate::get_ansi_color_scheme_if_colors_enabled()
+                $crate::get_default_color_scheme_if_enabled()
             ),
         )
     };
@@ -203,9 +203,9 @@ macro_rules! unwind_context_with_io {
 ///
 /// If not specified it uses [`std::io::stderr`] as a default writer,
 /// [`StdPanicDetector`] as a default panic detector and
-/// [`get_ansi_color_scheme_if_colors_enabled`] as a default color scheme. When
-/// using default values for all optional parameters, consider the use of
-/// [`debug_unwind_context`] macro instead. See
+/// [`get_default_color_scheme_if_enabled`] as a default color scheme. When
+/// using default values for all optional parameters, consider the
+/// use of [`debug_unwind_context`] macro instead. See
 /// [equivalent macros](#equivalent-macros) section below.
 ///
 /// The returned unwind context scope guard value should be kept alive as long
@@ -276,14 +276,14 @@ macro_rules! unwind_context_with_io {
 ///         (fn(foo, bar)),
 ///         writer = ::std::io::stderr(),
 ///         panic_detector = unwind_context::StdPanicDetector,
-///         color_scheme = unwind_context::get_ansi_color_scheme_if_colors_enabled(),
+///         color_scheme = unwind_context::get_default_color_scheme_if_enabled(),
 ///     );
 /// }
 /// ```
 ///
 /// [`debug_unwind_context`]: crate::debug_unwind_context
 /// [`StdPanicDetector`]: crate::StdPanicDetector
-/// [`get_ansi_color_scheme_if_colors_enabled`]: crate::get_ansi_color_scheme_if_colors_enabled
+/// [`get_default_color_scheme_if_enabled`]: crate::get_default_color_scheme_if_enabled
 /// [`build_unwind_context_data`]: crate::build_unwind_context_data
 #[macro_export]
 macro_rules! debug_unwind_context_with_io {

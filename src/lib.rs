@@ -75,11 +75,11 @@
 //! you want to use the [`core::fmt::Display`] representation, you can use the
 //! [`WithDisplay`] wrapper.
 //!
-//! You can use the [`set_ansi_colors_enabled`] function to unconditionally
-//! enable 16-ANSI-color colorization. If you want to enable colorization only
-//! if supported by the terminal, you can use the
-//! [`enable_ansi_colors_if_supported`] function, which will require enabling
-//! the [`detect-color-support`](#feature-flags) feature flag:
+//! You can use the [`set_colors_enabled`] function to unconditionally enable
+//! the 16-ANSI-color colorization. If you want to enable colorization only if
+//! supported by the terminal, you can use the [`enable_colors_if_supported`]
+//! function, which will require enabling the
+//! [`detect-color-support`](#feature-flags) feature flag:
 //! ```toml
 //! [dependencies.unwind-context]
 //! version = "0.1.0"
@@ -90,7 +90,7 @@
 //! # /*
 //! fn main() {
 //! # */
-//!     unwind_context::enable_ansi_colors_if_supported();
+//!     unwind_context::enable_colors_if_supported();
 //! #   test();
 //!     // ...
 //! # /*
@@ -101,13 +101,13 @@
 //! #[test]
 //! # */
 //! fn test() {
-//!     unwind_context::enable_ansi_colors_if_supported()
+//!     unwind_context::enable_colors_if_supported()
 //!     // ...
 //! }
 #![doc = "```"]
 #![doc = ""]
 //! If you want to specify a custom color scheme, you can use the
-//! [`set_ansi_color_scheme`] function.
+//! [`set_default_color_scheme`] function.
 //! Also, colorization can be customized separately for each context scope guard
 //! with the [`unwind_context_with_io`] and [`unwind_context_with_fmt`] macros.
 //!
@@ -183,7 +183,7 @@
 //!         ),
 //!         ::std::io::stderr(),
 //!         unwind_context::StdPanicDetector,
-//!         unwind_context::get_ansi_color_scheme_if_colors_enabled(),
+//!         unwind_context::get_default_color_scheme_if_enabled(),
 //!     );
 //!     // ...
 //!     for i in 0..10 {
@@ -194,7 +194,7 @@
 //!             )),
 //!             ::std::io::stderr(),
 //!             unwind_context::StdPanicDetector,
-//!             unwind_context::get_ansi_color_scheme_if_colors_enabled(),
+//!             unwind_context::get_default_color_scheme_if_enabled(),
 //!         );
 //!         // ...
 //!     }
@@ -206,9 +206,9 @@
 //! - `std` (enabled by default): Enables [`UnwindContextWithIo`] structure,
 //!   [`unwind_context`], [`debug_unwind_context`], [`unwind_context_with_io`],
 //!   and [`debug_unwind_context_with_io`] macros.
-//! - `detect-color-support`: Enables [`enable_ansi_colors_if_supported`]
-//!   function and [`supports-color`] optional dependency.
-//! - `custom-default-colors`: Enables [`set_ansi_color_scheme`] function and
+//! - `detect-color-support`: Enables [`enable_colors_if_supported`] function
+//!   and [`supports-color`] optional dependency.
+//! - `custom-default-colors`: Enables [`set_default_color_scheme`] function and
 //!   [`atomic_ref`] optional dependency.
 //!
 //! # Similar crates

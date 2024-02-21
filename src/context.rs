@@ -2,7 +2,7 @@
 /// scheme , and given function or scope context.
 ///
 /// It uses [`std::io::stderr`] writer, [`StdPanicDetector`] panic detector, and
-/// a color scheme determined by the [`get_ansi_color_scheme_if_colors_enabled`]
+/// a color scheme determined by the [`get_default_color_scheme_if_enabled`]
 /// function. If you want to customize a writer, a panic detector, or a color
 /// scheme, use [`unwind_context_with_io`] or [`unwind_context_with_fmt`].
 ///
@@ -12,12 +12,11 @@
 /// be enabled
 #[cfg_attr(
     feature = "detect-color-support",
-    doc = "either by the [`set_ansi_colors_enabled`] or [`enable_ansi_colors_if_supported`] \
-           functions."
+    doc = "either by the [`set_colors_enabled`] or [`enable_colors_if_supported`] functions."
 )]
 #[cfg_attr(
     not(feature = "detect-color-support"),
-    doc = "by the [`set_ansi_colors_enabled`] function."
+    doc = "by the [`set_colors_enabled`] function."
 )]
 #[doc = ""]
 /// Passed arguments are lazily formatted. The created wrapper takes ownership
@@ -87,11 +86,11 @@
 /// [`unwind_context_with_fmt`]: crate::unwind_context_with_fmt
 /// [`UnwindContextWithIo`]: crate::UnwindContextWithIo
 /// [`StdPanicDetector`]: crate::StdPanicDetector
-/// [`get_ansi_color_scheme_if_colors_enabled`]: crate::get_ansi_color_scheme_if_colors_enabled
-/// [`set_ansi_colors_enabled`]: crate::set_ansi_colors_enabled
+/// [`get_default_color_scheme_if_enabled`]: crate::get_default_color_scheme_if_enabled
+/// [`set_colors_enabled`]: crate::set_colors_enabled
 #[cfg_attr(
     feature = "detect-color-support",
-    doc = "[`enable_ansi_colors_if_supported`]: crate::enable_ansi_colors_if_supported"
+    doc = "[`enable_colors_if_supported`]: crate::enable_colors_if_supported"
 )]
 /// [`UnwindContextFunc`]: crate::UnwindContextFunc
 /// [`UnwindContextArgs`]: crate::UnwindContextArgs
@@ -102,7 +101,7 @@ macro_rules! unwind_context {
             ( $($context)* ),
             writer = ::std::io::stderr(),
             panic_detector = $crate::StdPanicDetector,
-            color_scheme = $crate::get_ansi_color_scheme_if_colors_enabled(),
+            color_scheme = $crate::get_default_color_scheme_if_enabled(),
         )
     };
 }
@@ -111,7 +110,7 @@ macro_rules! unwind_context {
 /// scheme , and given function or scope context in debug builds only.
 ///
 /// It uses [`std::io::stderr`] writer, [`StdPanicDetector`] panic detector, and
-/// a color scheme determined by the [`get_ansi_color_scheme_if_colors_enabled`]
+/// a color scheme determined by the [`get_default_color_scheme_if_enabled`]
 /// function. If you want to customize a writer, a panic detector, or a color
 /// scheme, use [`unwind_context_with_io`] or [`unwind_context_with_fmt`].
 ///
@@ -121,12 +120,11 @@ macro_rules! unwind_context {
 /// be enabled
 #[cfg_attr(
     feature = "detect-color-support",
-    doc = "either by the [`set_ansi_colors_enabled`] or [`enable_ansi_colors_if_supported`] \
-           functions."
+    doc = "either by the [`set_colors_enabled`] or [`enable_colors_if_supported`] functions."
 )]
 #[cfg_attr(
     not(feature = "detect-color-support"),
-    doc = "by the [`set_ansi_colors_enabled`] function."
+    doc = "by the [`set_colors_enabled`] function."
 )]
 #[doc = ""]
 /// Passed arguments are lazily formatted. The created wrapper takes ownership
@@ -203,11 +201,11 @@ macro_rules! unwind_context {
 /// [`unwind_context_with_fmt`]: crate::unwind_context_with_fmt
 /// [`UnwindContextWithIo`]: crate::UnwindContextWithIo
 /// [`StdPanicDetector`]: crate::StdPanicDetector
-/// [`get_ansi_color_scheme_if_colors_enabled`]: crate::get_ansi_color_scheme_if_colors_enabled
-/// [`set_ansi_colors_enabled`]: crate::set_ansi_colors_enabled
+/// [`get_default_color_scheme_if_enabled`]: crate::get_default_color_scheme_if_enabled
+/// [`set_colors_enabled`]: crate::set_colors_enabled
 #[cfg_attr(
     feature = "detect-color-support",
-    doc = "[`enable_ansi_colors_if_supported`]: crate::enable_ansi_colors_if_supported"
+    doc = "[`enable_colors_if_supported`]: crate::enable_colors_if_supported"
 )]
 /// [`UnwindContextFunc`]: crate::UnwindContextFunc
 /// [`UnwindContextArgs`]: crate::UnwindContextArgs
