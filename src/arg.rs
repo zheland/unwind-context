@@ -94,7 +94,7 @@ enum ColoredWriterModeStyle {
 }
 
 impl ColoredWriterModeStyle {
-    fn ansi_style(&self, color_scheme: &AnsiColorScheme) -> &'static str {
+    fn ansi_style(self, color_scheme: &AnsiColorScheme) -> &'static str {
         match self {
             Self::Default => color_scheme.default,
             Self::Ident => color_scheme.ident,

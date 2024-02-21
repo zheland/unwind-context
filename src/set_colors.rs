@@ -9,7 +9,7 @@ static SHOULD_COLORIZE: AtomicBool = AtomicBool::new(false);
 
 #[cfg(feature = "custom-default-colors")]
 #[cfg_attr(docsrs, doc(cfg(feature = "custom-default-colors")))]
-static ANSI_COLOR_SCHEME: AtomicRef<AnsiColorScheme> = AtomicRef::new(None);
+static ANSI_COLOR_SCHEME: AtomicRef<'_, AnsiColorScheme> = AtomicRef::new(None);
 
 /// Enables or disables ANSI colorization.
 ///
@@ -68,7 +68,7 @@ pub fn are_ansi_colors_enabled() -> bool {
 pub fn enable_ansi_colors_if_supported() {
     use supports_color::Stream;
     if supports_color::on(Stream::Stderr).is_some() {
-        set_ansi_colors_enabled(true)
+        set_ansi_colors_enabled(true);
     }
 }
 
@@ -96,7 +96,7 @@ pub fn enable_ansi_colors_if_supported() {
 /// ```
 #[inline]
 pub fn set_ansi_color_scheme(color_scheme: &'static AnsiColorScheme) {
-    ANSI_COLOR_SCHEME.store(Some(color_scheme), AtomicOrdering::Release)
+    ANSI_COLOR_SCHEME.store(Some(color_scheme), AtomicOrdering::Release);
 }
 
 /// Returns current ANSI color scheme.
@@ -107,6 +107,7 @@ pub fn set_ansi_color_scheme(color_scheme: &'static AnsiColorScheme) {
 /// let _current_global_color_scheme = unwind_context::get_ansi_color_scheme();
 /// ```
 #[inline]
+#[must_use]
 pub fn get_ansi_color_scheme() -> &'static AnsiColorScheme {
     get_ansi_color_scheme_impl()
 }

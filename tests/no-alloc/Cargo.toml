@@ -15,7 +15,7 @@ panic = "abort"
 [profile.release]
 panic = "abort"
 
-[workspace.lints.rust]
+[lints.rust]
 meta_variable_misuse = "warn"
 missing_abi = "warn"
 missing_copy_implementations = "warn"
@@ -35,7 +35,7 @@ unused_qualifications = "warn"
 unused_results = "warn"
 variant_size_differences = "warn"
 
-[workspace.lints.clippy]
+[lints.clippy]
 all = "warn"
 pedantic = "warn"
 alloc_instead_of_core = "warn"

@@ -23,10 +23,10 @@ impl<'a> FixedBufWriter<'a> {
     }
 }
 
-impl<'a> FmtWrite for FixedBufWriter<'a> {
+impl FmtWrite for FixedBufWriter<'_> {
     fn write_str(&mut self, s: &str) -> FmtResult {
         let from = self.used;
-        let until = from + s.len();
+        let until = from.checked_add(s.len()).ok_or(FmtError)?;
         self.buffer
             .get_mut(from..until)
             .ok_or(FmtError)?
@@ -36,7 +36,7 @@ impl<'a> FmtWrite for FixedBufWriter<'a> {
     }
 }
 
-pub fn buf_fmt<'a>(buffer: &'a mut [u8], args: FmtArguments) -> Result<&'a str, FmtError> {
+pub fn buf_fmt<'a>(buffer: &'a mut [u8], args: FmtArguments<'_>) -> Result<&'a str, FmtError> {
     let mut writer = FixedBufWriter::new(buffer);
     core::fmt::write(&mut writer, args)?;
     Ok(writer.into_str())

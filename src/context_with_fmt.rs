@@ -275,7 +275,7 @@ mod tests {
         is_panicking: &'a AtomicBool,
     }
 
-    impl<'a> PanicDetector for DummyPanicDetector<'a> {
+    impl PanicDetector for DummyPanicDetector<'_> {
         fn is_panicking(&self) -> bool {
             self.is_panicking.load(AtomicOrdering::Relaxed)
         }

@@ -1,3 +1,9 @@
+#[cfg(feature = "custom-default-colors")]
+use atomic_ref as _;
+#[cfg(feature = "detect-color-support")]
+use supports_color as _;
+use unwind_context as _;
+
 #[test]
 fn test_readme_deps() {
     version_sync::assert_markdown_deps_updated!("README.md");

@@ -61,10 +61,10 @@ pub fn check_location_part(
     let line: u32 = output.read_until(":").unwrap().parse().unwrap();
     assert!(line > min_line);
     assert!(line < max_line);
-    if !location_suffix.is_empty() {
+    if location_suffix.is_empty() {
+        let _column = output.read_until("\n").unwrap();
+    } else {
         let _column = output.read_until(location_suffix).unwrap();
         output.expect_str("\n").unwrap();
-    } else {
-        let _column = output.read_until("\n").unwrap();
     }
 }

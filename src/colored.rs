@@ -7,6 +7,11 @@ use crate::AnsiColorScheme;
 pub trait DebugAnsiColored {
     /// Formats the value using with colorization and a given
     /// [`AnsiColorScheme`].
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error if the value formatting fails.
+
     fn fmt_colored(
         &self,
         f: &mut Formatter<'_>,

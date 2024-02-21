@@ -1,5 +1,7 @@
 #![no_std]
 #![cfg_attr(docsrs, feature(doc_cfg))]
+#![cfg_attr(test, allow(clippy::unwrap_used))]
+
 //! The `unwind-context` crate makes debugging panics easier
 //! by adding a colored panic context with a simple macro.
 #![doc = ""]
@@ -240,6 +242,9 @@
 
 #[cfg(feature = "std")]
 extern crate std;
+
+#[cfg(test)]
+use version_sync as _; // Used in integration tests.
 
 mod arg;
 mod args;
