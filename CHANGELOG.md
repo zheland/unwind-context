@@ -7,19 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Function `set_ansi_colors_enabled` is renamed to `set_colors_enabled`.
-- Function `are_ansi_colors_enabled` is renamed to `are_colors_enabled`.
-- Function `enable_ansi_colors_if_supported` is renamed to
+- Rename `set_ansi_colors_enabled` to `set_colors_enabled`.
+- Rename `are_ansi_colors_enabled` to `are_colors_enabled`.
+- Rename `enable_ansi_colors_if_supported` to
   `enable_colors_if_supported`.
-- Function `set_ansi_color_scheme` is renamed to `set_default_color_scheme`.
-- Function `get_ansi_color_scheme` is renamed to `get_default_color_scheme`.
-- Function `get_ansi_color_scheme_if_colors_enabled` is renamed to
+- Rename `set_ansi_color_scheme` to `set_default_color_scheme`.
+- Rename `get_ansi_color_scheme` to `get_default_color_scheme`.
+- Rename `get_ansi_color_scheme_if_colors_enabled` to
   `get_default_color_scheme_if_enabled`.
-- Const `ANSI_COLOR_SCHEME` is renamed to `DEFAULT_COLOR_SCHEME`.
-- Const `DEFAULT_ANSI_COLOR_SCHEME` is renamed to `DEFAULT_DEFAULT_COLOR_SCHEME`.
+- Rename `DEFAULT_ANSI_COLOR_SCHEME` to `DEFAULT_DEFAULT_COLOR_SCHEME`.
+- Mark renamed items as deprecated and hide from docs.
 - Improve `debug_unwind`-like macros docs.
 - Improve `DebugAnsiColored::fmt_colored` docs.
-- Add some missing function attributes.
+- Add some missing `#[must_use]` function attributes.
 
 ## [0.1.0] - 2024-02-19
 ### Added

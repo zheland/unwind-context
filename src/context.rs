@@ -12,7 +12,10 @@
 /// be enabled
 #[cfg_attr(
     feature = "detect-color-support",
-    doc = "either by the [`set_colors_enabled`] or [`enable_colors_if_supported`] functions."
+    doc = "
+        either by the [`set_colors_enabled`] or [`enable_colors_if_supported`]
+        functions.
+    "
 )]
 #[cfg_attr(
     not(feature = "detect-color-support"),
@@ -120,7 +123,10 @@ macro_rules! unwind_context {
 /// be enabled
 #[cfg_attr(
     feature = "detect-color-support",
-    doc = "either by the [`set_colors_enabled`] or [`enable_colors_if_supported`] functions."
+    doc = "
+        `either by the [`set_colors_enabled`] or [`enable_colors_if_supported`]
+        functions.
+    "
 )]
 #[cfg_attr(
     not(feature = "detect-color-support"),

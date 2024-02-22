@@ -29,6 +29,10 @@ pub fn set_colors_enabled(enabled: bool) {
     SHOULD_COLORIZE.store(enabled, AtomicOrdering::Relaxed);
 }
 
+#[doc(hidden)]
+#[deprecated(since = "0.2.0", note = "renamed to `set_colors_enabled`.")]
+pub use set_colors_enabled as set_ansi_colors_enabled;
+
 /// Returns `true` if ANSI colors were enabled before.
 ///
 /// By default colorization is disabled.
@@ -43,6 +47,10 @@ pub fn set_colors_enabled(enabled: bool) {
 pub fn are_colors_enabled() -> bool {
     SHOULD_COLORIZE.load(AtomicOrdering::Relaxed)
 }
+
+#[doc(hidden)]
+#[deprecated(since = "0.2.0", note = "renamed to `are_colors_enabled`.")]
+pub use are_colors_enabled as are_ansi_colors_enabled;
 
 #[cfg(feature = "detect-color-support")]
 #[cfg_attr(docsrs, doc(cfg(feature = "detect-color-support")))]
@@ -72,6 +80,11 @@ pub fn enable_colors_if_supported() {
     }
 }
 
+#[cfg(feature = "detect-color-support")]
+#[doc(hidden)]
+#[deprecated(since = "0.2.0", note = "renamed to `enable_colors_if_supported`.")]
+pub use enable_colors_if_supported as enable_ansi_colors_if_supported;
+
 #[cfg(feature = "custom-default-colors")]
 #[cfg_attr(docsrs, doc(cfg(feature = "custom-default-colors")))]
 /// Sets ANSI color scheme.
@@ -99,6 +112,11 @@ pub fn set_default_color_scheme(color_scheme: &'static AnsiColorScheme) {
     DEFAULT_COLOR_SCHEME.store(Some(color_scheme), AtomicOrdering::Release);
 }
 
+#[cfg(feature = "custom-default-colors")]
+#[doc(hidden)]
+#[deprecated(since = "0.2.0", note = "renamed to `set_default_color_scheme`.")]
+pub use set_default_color_scheme as set_ansi_color_scheme;
+
 /// Returns the currently set default ANSI color scheme.
 ///
 /// # Examples
@@ -111,6 +129,10 @@ pub fn set_default_color_scheme(color_scheme: &'static AnsiColorScheme) {
 pub fn get_default_color_scheme() -> &'static AnsiColorScheme {
     get_default_ansi_color_scheme_impl()
 }
+
+#[doc(hidden)]
+#[deprecated(since = "0.2.0", note = "renamed to `get_default_color_scheme`.")]
+pub use get_default_color_scheme as get_ansi_color_scheme;
 
 #[cfg(feature = "custom-default-colors")]
 #[inline]
@@ -136,9 +158,17 @@ fn get_default_ansi_color_scheme_impl() -> &'static AnsiColorScheme {
 ///     unwind_context::get_default_color_scheme_if_enabled();
 /// ```
 #[inline]
+#[must_use]
 pub fn get_default_color_scheme_if_enabled() -> Option<&'static AnsiColorScheme> {
     are_colors_enabled().then(get_default_color_scheme)
 }
+
+#[doc(hidden)]
+#[deprecated(
+    since = "0.2.0",
+    note = "renamed to `get_default_color_scheme_if_enabled`."
+)]
+pub use get_default_color_scheme_if_enabled as get_ansi_color_scheme_if_colors_enabled;
 
 #[cfg(all(test, feature = "std"))]
 mod tests {

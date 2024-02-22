@@ -15,6 +15,10 @@ pub static DEFAULT_DEFAULT_COLOR_SCHEME: AnsiColorScheme = AnsiColorScheme {
     escaped: "\u{1b}[0;95m",
 };
 
+#[doc(hidden)]
+#[deprecated(since = "0.2.0", note = "renamed to `DEFAULT_DEFAULT_COLOR_SCHEME`.")]
+pub use DEFAULT_DEFAULT_COLOR_SCHEME as DEFAULT_ANSI_COLOR_SCHEME;
+
 /// A structure representing an ANSI color scheme used by [`DebugAnsiColored`]
 /// formatter.
 ///
