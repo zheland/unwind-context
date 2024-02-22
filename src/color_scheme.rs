@@ -1,5 +1,17 @@
 /// The default ANSI color scheme, which is used if colorization is enabled but
 /// no custom color scheme is set.
+///
+/// # Examples
+#[cfg_attr(feature = "custom-default-colors", doc = "```rust")]
+#[cfg_attr(not(feature = "custom-default-colors"), doc = "```rust,compile_fail")]
+/// static CUSTOM_DEFAULT_COLOR_SCHEME: unwind_context::AnsiColorScheme =
+///     unwind_context::AnsiColorScheme {
+///         item: "\u{1b}[37m",
+///         ..unwind_context::DEFAULT_DEFAULT_COLOR_SCHEME
+///     };
+///
+/// unwind_context::set_default_color_scheme(&CUSTOM_DEFAULT_COLOR_SCHEME);
+#[doc = "```"]
 pub static DEFAULT_DEFAULT_COLOR_SCHEME: AnsiColorScheme = AnsiColorScheme {
     default: "\u{1b}[0m",
     location: "\u{1b}[94m",
@@ -22,6 +34,25 @@ pub use DEFAULT_DEFAULT_COLOR_SCHEME as DEFAULT_ANSI_COLOR_SCHEME;
 /// A structure representing an ANSI color scheme used by [`DebugAnsiColored`]
 /// formatter.
 ///
+/// # Examples
+#[cfg_attr(feature = "custom-default-colors", doc = "```rust")]
+#[cfg_attr(not(feature = "custom-default-colors"), doc = "```rust,compile_fail")]
+/// unwind_context::set_default_color_scheme(&unwind_context::AnsiColorScheme {
+///     default: "\u{1b}[0m",
+///     location: "\u{1b}[31m",
+///     fn_keyword: "\u{1b}[32m",
+///     func_name: "\u{1b}[33m",
+///     func_braces: "\u{1b}[34m",
+///     value_braces: "\u{1b}[35m",
+///     ident: "\u{1b}[36m",
+///     item: "\u{1b}[37m",
+///     boolean: "\u{1b}[91m",
+///     number: "\u{1b}[92m",
+///     quoted: "\u{1b}[93m",
+///     escaped: "\u{1b}[94m",
+/// });
+#[doc = "```"]
+#[doc = ""]
 /// [`DebugAnsiColored`]: crate::DebugAnsiColored
 #[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
 pub struct AnsiColorScheme {

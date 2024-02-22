@@ -3,6 +3,12 @@ use core::fmt::{Debug, Formatter, Result as FmtResult, Write as FmtWrite};
 use crate::{AnsiColorScheme, DebugAnsiColored};
 
 /// A structure representing an argument name and its value.
+///
+/// This type is not intended to be used directly. Consider using macros like
+/// [`build_unwind_context_data`] or [`unwind_context`] instead.
+///
+/// [`build_unwind_context_data`]: crate::build_unwind_context_data
+/// [`unwind_context`]: crate::unwind_context
 #[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct UnwindContextArg<T> {
     /// Optional argument name.
@@ -13,6 +19,12 @@ pub struct UnwindContextArg<T> {
 
 impl<T> UnwindContextArg<T> {
     /// Create a new `UnwindContextArg` with the provided name and value.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// let arg = unwind_context::UnwindContextArg::new(Some("foo"), 123);
+    /// ```
     #[inline]
     pub fn new(name: Option<&'static str>, value: T) -> Self {
         Self { name, value }
@@ -261,7 +273,7 @@ mod tests {
     use core::marker::PhantomData;
 
     use crate::arg::{match_false_ident, match_true_ident};
-    use crate::test_common::{arg, colored_arg, TEST_ANSI_COLOR_SCHEME};
+    use crate::test_common::{arg, colored_arg, TEST_COLOR_SCHEME};
     use crate::test_util::{debug_fmt, TransparentDebug};
     use crate::{AnsiColored, UnwindContextArg};
 
@@ -277,7 +289,7 @@ mod tests {
             buffer,
             &AnsiColored::new(
                 UnwindContextArg::new(None, TransparentDebug(value)),
-                &TEST_ANSI_COLOR_SCHEME,
+                &TEST_COLOR_SCHEME,
             ),
         )
     }

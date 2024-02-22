@@ -13,6 +13,22 @@ use crate::{AnsiColorScheme, AnsiColored, DebugAnsiColored, PanicDetector};
 /// When this structure is dropped (falls out of scope) and the current thread
 /// is not unwinding, the unwind context will be forgotten.
 ///
+/// # Examples
+///
+/// ```rust
+/// use unwind_context::{unwind_context_with_fmt, UnwindContextWithFmt};
+///
+/// fn func(foo: u32, bar: &str, secret: &str, custom_writer: &mut String) {
+///     let _ctx: UnwindContextWithFmt<_, _, _> = unwind_context_with_fmt!(
+///         (fn(foo, bar, ...)),
+///         writer = custom_writer,
+///         panic_detector = unwind_context::StdPanicDetector,
+///         color_scheme = None,
+///     );
+///     // ...
+/// }
+/// ```
+///
 /// [`unwind_context`]: crate::unwind_context
 #[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
 pub struct UnwindContextWithFmt<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> {
@@ -37,6 +53,11 @@ impl<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> Drop
 impl<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> UnwindContextWithFmt<W, T, P> {
     /// Create a new `UnwindContextWithFmt` with the provided
     /// [`core::fmt::Write`] writer, context scope data, and color scheme.
+    ///
+    /// This function is not intended to be used directly. Consider using macros
+    /// like [`unwind_context_with_fmt`] instead.
+    ///
+    /// [`unwind_context_with_fmt`]: crate::unwind_context_with_fmt
     #[inline]
     #[must_use = "\
         if unused, the `UnwindContextWithFmt` will immediately drop,
@@ -226,6 +247,7 @@ macro_rules! unwind_context_with_fmt {
 /// }
 /// ```
 ///
+/// [`unwind_context_with_fmt`]: crate::unwind_context_with_fmt
 /// [`build_unwind_context_data`]: crate::build_unwind_context_data
 /// [`get_default_color_scheme_if_enabled`]: crate::get_default_color_scheme_if_enabled
 #[macro_export]
@@ -262,7 +284,7 @@ mod tests {
     #[cfg(feature = "std")]
     use std::sync::mpsc;
 
-    use crate::test_common::{check_location_part, TEST_ANSI_COLOR_SCHEME};
+    use crate::test_common::{check_location_part, TEST_COLOR_SCHEME};
     #[cfg(feature = "std")]
     use crate::test_util::collect_string_from_recv;
     use crate::test_util::{FixedBufWriter, PatternMatcher};
@@ -505,7 +527,7 @@ mod tests {
             &mut writer2,
             &mut writer3,
             dummy_panic_detector.clone(),
-            Some(&TEST_ANSI_COLOR_SCHEME),
+            Some(&TEST_COLOR_SCHEME),
         );
         assert_eq!(result, 6000);
 

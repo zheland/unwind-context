@@ -9,7 +9,7 @@ use crate::{AnsiColorScheme, AnsiColored, UnwindContextArg, UnwindContextArgs};
 // requires a global lock to prohibit parallel execution in different tests.
 pub static SERIAL_TEST: Mutex<()> = Mutex::new(());
 
-pub static TEST_ANSI_COLOR_SCHEME: AnsiColorScheme = AnsiColorScheme {
+pub static TEST_COLOR_SCHEME: AnsiColorScheme = AnsiColorScheme {
     default: "{DEF}",
     location: "{LOC}",
     fn_keyword: "{FN}",
@@ -29,7 +29,7 @@ pub fn arg<T>(name: Option<&'static str>, value: T) -> UnwindContextArg<T> {
 }
 
 pub fn colored_arg<T>(name: Option<&'static str>, value: T) -> AnsiColored<UnwindContextArg<T>> {
-    AnsiColored::new(UnwindContextArg::new(name, value), &TEST_ANSI_COLOR_SCHEME)
+    AnsiColored::new(UnwindContextArg::new(name, value), &TEST_COLOR_SCHEME)
 }
 
 pub fn args<T>(args: T) -> UnwindContextArgs<T> {
@@ -37,7 +37,7 @@ pub fn args<T>(args: T) -> UnwindContextArgs<T> {
 }
 
 pub fn colored_args<T>(args: T) -> AnsiColored<UnwindContextArgs<T>> {
-    AnsiColored::new(UnwindContextArgs::new(args), &TEST_ANSI_COLOR_SCHEME)
+    AnsiColored::new(UnwindContextArgs::new(args), &TEST_COLOR_SCHEME)
 }
 
 #[track_caller]

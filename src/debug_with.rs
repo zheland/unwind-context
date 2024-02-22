@@ -3,6 +3,17 @@ use core::fmt::{Debug, Display, Formatter, Result as FmtResult};
 /// An utility wrapper type which is used to forward both [`core::fmt::Debug`]
 /// and [`core::fmt::Display`] value implementations to its
 /// [`core::fmt::Display`] implementation.
+///
+/// # Examples
+///
+/// ```rust
+/// use unwind_context::{unwind_context, WithDisplay};
+///
+/// fn func(value: impl core::fmt::Display) {
+///     let _ctx = unwind_context!(fn(WithDisplay(value)));
+///     // ...
+/// }
+/// ```
 #[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Default)]
 pub struct WithDisplay<T>(
     /// The wrapped value to be formatted with [`core::fmt::Display`] regardless
@@ -14,6 +25,17 @@ pub struct WithDisplay<T>(
 /// An utility wrapper type which is used to forward both [`core::fmt::Debug`]
 /// and [`core::fmt::Display`] value implementations to its [`core::fmt::Debug`]
 /// implementation with pretty flag.
+///
+/// # Examples
+///
+/// ```rust
+/// use unwind_context::{unwind_context, WithPrettyDebug};
+///
+/// fn func(long_json: impl core::fmt::Debug) {
+///     let _ctx = unwind_context!(fn(WithPrettyDebug(long_json)));
+///     // ...
+/// }
+/// ```
 #[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Default)]
 pub struct WithPrettyDebug<T>(
     /// The wrapped value to be formatted with pretty

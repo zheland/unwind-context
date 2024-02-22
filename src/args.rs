@@ -3,6 +3,12 @@ use core::fmt::{Debug, Formatter, Result as FmtResult};
 use crate::{AnsiColorScheme, AnsiColored, DebugAnsiColored, UnwindContextArg};
 
 /// A structure representing function argument names and their values.
+///
+/// This type is not intended to be used directly. Consider using macros like
+/// [`build_unwind_context_data`] or [`unwind_context`] instead.
+///
+/// [`build_unwind_context_data`]: crate::build_unwind_context_data
+/// [`unwind_context`]: crate::unwind_context
 #[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct UnwindContextArgs<Params>(
     /// Function argument names and values in cons-like list representation.
@@ -14,6 +20,24 @@ impl<Params> UnwindContextArgs<Params> {
     ///
     /// Parameters are required to be represented as a recursive tuple list like
     /// `(A, (B, (C, (D, ()))))` in order to be formatted.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use unwind_context::{UnwindContextArg, UnwindContextArgs};
+    ///
+    /// let args0 = UnwindContextArgs::new(());
+    ///
+    /// let args1 = UnwindContextArgs::new((UnwindContextArg::new(Some("first"), 123), ()));
+    ///
+    /// let args3 = UnwindContextArgs::new((
+    ///     UnwindContextArg::new(Some("first"), 123),
+    ///     (
+    ///         UnwindContextArg::new(Some("second"), "foo"),
+    ///         (UnwindContextArg::new(Some("third"), true), ()),
+    ///     ),
+    /// ));
+    /// ```
     #[inline]
     pub fn new(args: Params) -> Self {
         Self(args)

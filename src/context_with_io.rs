@@ -12,6 +12,19 @@ use crate::{AnsiColorScheme, AnsiColored, DebugAnsiColored, PanicDetector};
 ///
 /// When this structure is dropped (falls out of scope) and the current thread
 /// is not unwinding, the unwind context will be forgotten.
+///
+/// # Examples
+///
+/// ```rust
+/// use unwind_context::{unwind_context, UnwindContextWithIo};
+///
+/// fn func(foo: u32, bar: &str, secret: &str) {
+///     let _ctx: UnwindContextWithIo<_, _, _> = unwind_context!(fn(foo, bar, ...));
+///     // ...
+/// }
+/// ```
+///
+/// [`unwind_context`]: crate::unwind_context
 #[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
 pub struct UnwindContextWithIo<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> {
     data: T,
@@ -35,6 +48,12 @@ impl<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> Drop
 impl<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> UnwindContextWithIo<W, T, P> {
     /// Create a new `UnwindContextWithFmt` with the provided
     /// [`core::fmt::Write`] writer, context scope data, and color scheme.
+    ///
+    /// This function is not intended to be used directly. Consider using macros
+    /// like [`unwind_context`] or [`unwind_context_with_io`] instead.
+    ///
+    /// [`unwind_context`]: crate::unwind_context
+    /// [`unwind_context_with_io`]: crate::unwind_context_with_io
     #[inline]
     #[must_use = "\
         if unused, the `UnwindContextWithIo` will immediately drop,
@@ -155,9 +174,9 @@ impl<W: Write, T: Debug + DebugAnsiColored, P: PanicDetector> UnwindContextWithI
 /// use unwind_context::{unwind_context, unwind_context_with_io};
 ///
 /// fn func(foo: u32, bar: &str) {
-///     unwind_context!(fn(foo, bar));
-///     unwind_context_with_io!((fn(foo, bar)));
-///     unwind_context_with_io!(
+///     let _ctx = unwind_context!(fn(foo, bar));
+///     let _ctx = unwind_context_with_io!((fn(foo, bar)));
+///     let _ctx = unwind_context_with_io!(
 ///         (fn(foo, bar)),
 ///         writer = ::std::io::stderr(),
 ///         panic_detector = unwind_context::StdPanicDetector,
@@ -281,6 +300,7 @@ macro_rules! unwind_context_with_io {
 /// }
 /// ```
 ///
+/// [`unwind_context_with_io`]: crate::unwind_context_with_io
 /// [`debug_unwind_context`]: crate::debug_unwind_context
 /// [`StdPanicDetector`]: crate::StdPanicDetector
 /// [`get_default_color_scheme_if_enabled`]: crate::get_default_color_scheme_if_enabled
@@ -313,7 +333,7 @@ mod tests {
     use std::string::String;
     use std::sync::mpsc;
 
-    use crate::test_common::{check_location_part, TEST_ANSI_COLOR_SCHEME};
+    use crate::test_common::{check_location_part, TEST_COLOR_SCHEME};
     use crate::test_util::{collect_string_from_recv, PatternMatcher};
     use crate::AnsiColorScheme;
 
@@ -473,7 +493,7 @@ mod tests {
         let (sender, recv) = mpsc::channel();
         let mut writer = Writer(sender);
         let result = std::panic::catch_unwind(move || {
-            func1(1000, "a", &mut writer, Some(&TEST_ANSI_COLOR_SCHEME))
+            func1(1000, "a", &mut writer, Some(&TEST_COLOR_SCHEME))
         });
         assert!(result.is_err());
         let output = collect_string_from_recv(&recv);

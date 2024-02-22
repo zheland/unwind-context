@@ -3,6 +3,12 @@ use core::fmt::{Debug, Formatter, Result as FmtResult};
 use crate::{AnsiColorScheme, AnsiColored, DebugAnsiColored, UnwindContextArgs};
 
 /// A structure representing function name and its argument names and values.
+///
+/// This type is not intended to be used directly. Consider using macros like
+/// [`build_unwind_context_data`] or [`unwind_context`] instead.
+///
+/// [`build_unwind_context_data`]: crate::build_unwind_context_data
+/// [`unwind_context`]: crate::unwind_context
 #[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct UnwindContextFunc<Args> {
     /// Function name.
@@ -13,6 +19,27 @@ pub struct UnwindContextFunc<Args> {
 
 impl<Args> UnwindContextFunc<Args> {
     /// Create a new `UnwindContextFunc` with the provided name and arguments.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use unwind_context::{UnwindContextArg, UnwindContextFunc};
+    ///
+    /// let func1 = UnwindContextFunc::new("name1", ());
+    ///
+    /// let func2 = UnwindContextFunc::new("name2", (UnwindContextArg::new(Some("first"), 123), ()));
+    ///
+    /// let func3 = UnwindContextFunc::new(
+    ///     "name3",
+    ///     (
+    ///         UnwindContextArg::new(Some("first"), 123),
+    ///         (
+    ///             UnwindContextArg::new(Some("second"), "foo"),
+    ///             (UnwindContextArg::new(Some("third"), true), ()),
+    ///         ),
+    ///     ),
+    /// );
+    /// ```
     #[inline]
     pub fn new(name: &'static str, args: Args) -> Self {
         Self { name, args }
@@ -65,7 +92,7 @@ where
 mod tests {
     use core::fmt::Error as FmtError;
 
-    use crate::test_common::{arg, TEST_ANSI_COLOR_SCHEME};
+    use crate::test_common::{arg, TEST_COLOR_SCHEME};
     use crate::test_util::debug_fmt;
     use crate::{AnsiColored, UnwindContextFunc};
 
@@ -102,7 +129,7 @@ mod tests {
                 &mut buffer,
                 &AnsiColored::new(
                     UnwindContextFunc::new("foo", (arg(Some("bar"), 1), (arg(Some("baz"), 2), ()))),
-                    &TEST_ANSI_COLOR_SCHEME
+                    &TEST_COLOR_SCHEME
                 )
             ),
             Ok(concat!(
@@ -136,7 +163,7 @@ mod tests {
     fn test_func_failed_colored_fmt() {
         let func = AnsiColored::new(
             UnwindContextFunc::new("foo", (arg(Some("foo"), 1), (arg(Some("bar"), 2), ()))),
-            &TEST_ANSI_COLOR_SCHEME,
+            &TEST_COLOR_SCHEME,
         );
 
         let mut buffer = [0; 128];

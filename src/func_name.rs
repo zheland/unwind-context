@@ -39,6 +39,13 @@ pub fn func_name_from_item_type_name(
 ///
 /// In short: use this for debugging, avoid using the output to affect program
 /// behavior.
+///
+/// # Examples
+///
+/// ```
+/// let current_function_name = unwind_context::func_name!();
+/// println!("defined in function: {current_function_name}");
+/// ```
 #[macro_export]
 macro_rules! func_name {
     () => {{

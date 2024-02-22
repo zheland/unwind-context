@@ -124,7 +124,7 @@ default-features = false
 
 The following crate example:
 ```rust
-extern crate unwind_context;
+#![allow(missing_docs, unused_crate_dependencies)]
 
 use unwind_context::unwind_context;
 
@@ -139,7 +139,7 @@ fn main() {
 fn app_logic(value: Wrapper<String>, arr: &[u8], secret: &str, flag: bool) {
     let _ctx = unwind_context!(fn(value.clone(), arr, ..., flag));
     // ...
-    collect_rotations("áöù");
+    let _ = collect_rotations("áöù");
     // ...
     let _ = (value, arr, secret, flag);
 }
