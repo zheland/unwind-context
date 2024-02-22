@@ -20,7 +20,7 @@
     <g class="screen">
         <rect class="background" x="0" y="0" width="100%" height="100%"/>
         <text x="8" y="8" textLength="504">$ cargo -q run --example demo --features=&quot;detect-color-support&quot;</text>
-        <text x="8" y="25" textLength="400">thread &#39;main&#39; panicked at examples/demo.rs:36:12:</text>
+        <text x="8" y="25" textLength="392">thread &#39;main&#39; panicked at examples/demo.rs:36:12:</text>
         <text x="8" y="42" textLength="600">byte index 1 is not a char boundary; it is inside &#39;á&#39; (bytes 0..2) of `áöù`</text>
         <text x="8" y="59" textLength="616">note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</text>
         <text x="8" y="76" textLength="24" style="fill: #c4a000">fn </text>
