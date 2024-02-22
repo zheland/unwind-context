@@ -53,7 +53,7 @@ profiles.
 First, add the following to your `Cargo.toml`:
 ```toml
 [dependencies]
-unwind-context = "0.2.0"
+unwind-context = "0.2.1"
 ```
 
 Then, add the macro call with the given function arguments or scope
@@ -88,7 +88,7 @@ function, which will require enabling the
 [`detect-color-support`](#feature-flags) feature flag:
 ```toml
 [dependencies.unwind-context]
-version = "0.2.0"
+version = "0.2.1"
 features = [ "detect-color-support" ]
 ```
 ```rust
@@ -116,7 +116,7 @@ your custom [`core::fmt::Write`] writer and custom [`PanicDetector`], use
 `default-features = false` in your `Cargo.toml` as shown below:
 ```toml
 [dependencies.unwind-context]
-version = "0.2.0"
+version = "0.2.1"
 default-features = false
 ```
 
