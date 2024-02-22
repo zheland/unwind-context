@@ -31,7 +31,7 @@
         <text x="224" y="76" textLength="8" style="fill: #34e2e2">1</text>
         <text x="232" y="76" textLength="8">)</text>
         <text x="8" y="93" textLength="56">    at </text>
-        <text x="64" y="93" textLength="184" style="fill: #729fcf">examples/demo.rs:35:16</text>
+        <text x="64" y="93" textLength="176" style="fill: #729fcf">examples/demo.rs:35:16</text>
         <text x="8" y="110" textLength="24" style="fill: #c4a000">fn </text>
         <text x="32" y="110" textLength="88" style="fill: #fce94f">rotate_left</text>
         <text x="120" y="110" textLength="64">(value: </text>
@@ -40,14 +40,14 @@
         <text x="280" y="110" textLength="8" style="fill: #34e2e2">1</text>
         <text x="288" y="110" textLength="8">)</text>
         <text x="8" y="127" textLength="56">    at </text>
-        <text x="64" y="127" textLength="184" style="fill: #729fcf">examples/demo.rs:29:16</text>
+        <text x="64" y="127" textLength="176" style="fill: #729fcf">examples/demo.rs:29:16</text>
         <text x="8" y="144" textLength="24" style="fill: #c4a000">fn </text>
         <text x="32" y="144" textLength="136" style="fill: #fce94f">collect_rotations</text>
         <text x="168" y="144" textLength="64">(value: </text>
         <text x="232" y="144" textLength="40" style="fill: #4e9a06">&quot;áöù&quot;</text>
         <text x="272" y="144" textLength="8">)</text>
         <text x="8" y="161" textLength="56">    at </text>
-        <text x="64" y="161" textLength="184" style="fill: #729fcf">examples/demo.rs:22:16</text>
+        <text x="64" y="161" textLength="176" style="fill: #729fcf">examples/demo.rs:22:16</text>
         <text x="8" y="178" textLength="24" style="fill: #c4a000">fn </text>
         <text x="32" y="178" textLength="72" style="fill: #fce94f">app_logic</text>
         <text x="104" y="178" textLength="128">(value.clone(): </text>
@@ -66,6 +66,6 @@
         <text x="592" y="178" textLength="40" class="bold" style="fill: #fce94f">false</text>
         <text x="632" y="178" textLength="8">)</text>
         <text x="8" y="195" textLength="56">    at </text>
-        <text x="64" y="195" textLength="184" style="fill: #729fcf">examples/demo.rs:14:16</text>
+        <text x="64" y="195" textLength="176" style="fill: #729fcf">examples/demo.rs:14:16</text>
     </g>
 </svg>
