@@ -34,7 +34,15 @@ it easier to add context to assertions in your tests. This crate provides
 auxiliary types, traits, functions, and macros that help you define function
 or scope context and write it to [`std::io::stderr`] or another
 writeable target if panic occurs. If panic occurs, the context will be
-written in "reverse" chronological order.
+written in "reverse" chronological order during the unwinding process.
+
+This library adds very little overhead to compiled functions unless they are
+panicked:
+- First, it constructs a structure containing the context data, code
+  location, writer, and color scheme on the stack. It also stores a
+  reference to the custom panic detector, if specified.
+- Finally, it adds a check for [`std::thread::panicking`] and calls the cold
+  print function if panic has been detected.
 
 This crate is intended for diagnostic use. The exact contents and format of
 the messages printed on panic are not specified, other than being a clear
