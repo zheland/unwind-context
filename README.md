@@ -258,10 +258,17 @@ fn foo(a: u32, b: Vec<u8>, c: bool, d: String) {
 ## Similar crates
 
 - [`scopeguard`] allows you to run any code at the end of a scope. It has
-  both success and unwind guard variants.
+  both success and unwind guard variants, and it doesn't require panic hook
+  modification.
 - [`panic-context`] allows you to specify and modify panic context using a
-  custom panic hook. It provides more fine-grained control over the output
-  but doesn’t add any automatic context or colorization.
+  custom panic hook. It provides more fine-grained control over the output.
+  However, it implicitly modifies the panic hook using a mutex for a
+  one-time thread local initialization and doesn’t add any automatic context
+  or colorization.
+- [`econtext`] allows you to specify panic context and automatically adds
+  some context including function name and location. However, it requires
+  panic hook modification via the init function and uses dynamic dispatch
+  and some unsafe code.
 
 ## License
 
@@ -300,3 +307,4 @@ additional terms or conditions.
 [`atomic_ref`]: https://crates.io/crates/atomic_ref
 [`scopeguard`]: https://crates.io/crates/scopeguard
 [`panic-context`]: https://crates.io/crates/panic-context
+[`econtext`]: https://crates.io/crates/econtext
