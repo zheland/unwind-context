@@ -34,8 +34,9 @@
 //! - First, it constructs a structure containing the context data, code
 //!   location, writer, and color scheme on the stack. It also stores a
 //!   reference to the custom panic detector, if specified.
-//! - Finally, it adds a check for [`std::thread::panicking`] and calls the cold
-//!   print function if panic has been detected.
+//! - And when this "context scope guard" structure is dropped, its destructor
+//!   checks for [`std::thread::panicking`] and calls the cold print function if
+//!   panic has been detected.
 //!
 //! This crate is intended for diagnostic use. The exact contents and format of
 //! the messages printed on panic are not specified, other than being a clear
